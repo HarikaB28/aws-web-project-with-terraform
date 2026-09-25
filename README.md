@@ -67,3 +67,9 @@ terraform destroy
 ```
 *(Type `yes` when prompted to confirm the deletion)*
 
+
+## Output screenshots
+
+![ouput1](./Screenshot 2026-09-25 165721.png)
+![output2](./Screenshot 2026-09-25 165740.png)
+
