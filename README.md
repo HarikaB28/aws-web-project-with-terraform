@@ -1,14 +1,69 @@
 # Terraform AWS Webserver Project
 
-## Project Description
-This is a complete, working Infrastructure-as-Code (IaC) project built using **Terraform** to deploy a functional, reliable, and secure web hosting environment on **Amazon Web Services (AWS)**. 
+This project uses **Infrastructure as Code (IaC)** via Terraform to automatically deploy a highly available, secure, and load-balanced web hosting environment on Amazon Web Services.
 
-Based on the architecture diagram, this project automatically provisions a custom Virtual Private Cloud (VPC) that hosts two separate public subnets. An Application Load Balancer (ALB) sits at the front door of the network to receive incoming user traffic and split the workload evenly across two EC2 instances running Apache web servers. Additionally, the setup includes private, direct network connectivity to an Amazon S3 bucket via a VPC Gateway Endpoint, ensuring data storage traffic never has to travel over the public internet.
+---
 
-## Key Features & Infrastructure Components
-* **Custom AWS VPC Network:** A fully configured virtual network isolated securely within your AWS account.
-* **Application Load Balancing:** A front-end load balancer that dynamically manages traffic distribution and automatically redirects users away from a server if it goes down.
-* **Dual Public Subnets:** Built across two availability zones to ensure the project remains up and running even if one AWS data center experiences an issue.
-* **Automated Web Servers:** Two EC2 instances that automatically install Apache and launch a "welcome to webserver" homepage upon their very first boot using a separate User Data bash script.
-* **Secure S3 Storage Integration:** Direct network paths to Amazon S3 using integrated IAM roles, avoiding the need to hardcode dangerous AWS security keys inside the server code.
+## 🏗️ Architecture Overview
+
+This project provisions the following components automatically:
+* **Custom AWS VPC:** An isolated network with 2 Public Subnets distributed across separate Availability Zones for high availability.
+* **Application Load Balancer (ALB):** Sits at the front door to evenly split incoming web traffic across your servers.
+* **Dual EC2 Web Servers:** Two virtual servers running Apache web servers that boot up with a custom "welcome" homepage.
+* **Secure S3 Storage Integration:** Private network connectivity to Amazon S3 via a **VPC Gateway Endpoint**, ensuring storage traffic never travels over the public internet.
+
+![Architecture](./image.jpg)
+
+---
+
+## 🛠️ Prerequisites
+
+Before you start, make sure you have:
+1. **Terraform installed** (v1.0 or higher).
+2. **AWS CLI installed and configured** with your AWS credentials (`aws configure`).
+
+---
+
+## 🚀 How to Deploy
+
+Follow these simple steps to spin up your entire cloud infrastructure:
+
+### 1. Initialize Project
+Download the required AWS plugins and initialize your environment:
+```bash
+terraform init
+```
+
+### 2. View Deployment Plan
+Preview the exact AWS resources Terraform is going to create:
+```bash
+terraform plan
+```
+
+### 3. Deploy to AWS
+Apply the configuration to launch your live environment. Type `yes` when prompted:
+```bash
+terraform apply
+```
+
+*Once finished, Terraform will output your unique **Application Load Balancer URL**.*
+
+---
+
+## 🔍 Verifying the Deployment
+
+1. Copy the `alb_dns_name` URL provided in the terminal output.
+2. Paste it into your web browser.
+3. Refresh the page a few times to watch the Application Load Balancer seamlessly switch traffic between `webserver-1` and `webserver-2`.
+
+---
+
+## 🧹 Cleanup & Teardown
+
+To avoid incurring unexpected AWS cloud charges, destroy all infrastructure components completely when you are done:
+
+```bash
+terraform destroy
+```
+*(Type `yes` when prompted to confirm the deletion)*
 
